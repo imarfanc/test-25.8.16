@@ -3,7 +3,7 @@
     "section": "daisyui-test-apps",
     "name": "daisyui components test",
     "description": "Minimal daisyui-style components + Tailwind v4 (no build).",
-    "path": "/Apps/daisyui/index.html",
+    "path": "Apps/daisyui/index.html",
     "color": "secondary/60",
     "borderhoverColor": "secondary",
     "textColor": "secondary",

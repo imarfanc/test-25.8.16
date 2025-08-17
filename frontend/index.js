@@ -28,7 +28,7 @@ async function loadApps() {
 		throw new Error("Empty apps from API");
 	} catch (apiErr) {
 		try {
-			const res = await fetch("/Apps/Apps.json", { headers: { Accept: "application/json" } });
+			const res = await fetch("./Apps/Apps.json", { headers: { Accept: "application/json" } });
 			if (!res.ok) throw new Error(`HTTP ${res.status}`);
 			const data = await res.json();
 			if (Array.isArray(data)) return data;
