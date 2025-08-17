@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Simple Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .post {
+            margin-bottom: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        .post:last-child {
+            border-bottom: none;
+        }
+        .post-meta {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        pre {
+            background-color: #272822;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            position: relative;
+            margin-top: 10px;
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+        }
+        .copy-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8em;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        .copy-button:hover {
+            opacity: 1;
+        }
+        .copy-button:active {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My Awesome Blog</h1>
+
+        <div class="post">
+            <h2>First Steps with Python</h2>
+            <p class="post-meta">Published on August 17, 2025</p>
+            <p>
+                Hello world! This is my first blog post where I'll share a simple Python example.
+                Python is a versatile language, great for beginners and experts alike.
+            </p>
+            <pre><code id="code-block-1">print("Hello, World!")
+
+def greet(name):
+    return f"Hello, {name}!"
+
+print(greet("Gemini"))</code><button class="copy-button" onclick="copyCode('code-block-1', this)">Copy Code</button></pre>
+            <p>
+                This simple script prints a greeting. You can run it directly from your terminal.
+            </p>
+        </div>
+
+        <div class="post">
+            <h2>JavaScript Array Manipulation</h2>
+            <p class="post-meta">Published on August 17, 2025</p>
+            <p>
+                In this post, we'll look at a common JavaScript task: manipulating arrays.
+                Here's an example of how to filter and map an array.
+            </p>
+            <pre><code id="code-block-2">const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+const evenNumbersDoubled = numbers
+    .filter(num => num % 2 === 0)
+    .map(num => num * 2);
+
+console.log(evenNumbersDoubled); // Output: [4, 8, 12, 16, 20]</code><button class="copy-button" onclick="copyCode('code-block-2', this)">Copy Code</button></pre>
+            <p>
+                This snippet demonstrates chaining array methods for concise and powerful data transformations.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function copyCode(codeBlockId, buttonElement) {
+            const codeBlock = document.getElementById(codeBlockId);
+            const codeText = codeBlock.textContent;
+
+            navigator.clipboard.writeText(codeText).then(() => {
+                const originalText = buttonElement.textContent;
+                buttonElement.textContent = 'Copied!';
+                setTimeout(() => {
+                    buttonElement.textContent = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
