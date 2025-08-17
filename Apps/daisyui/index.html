@@ -9,12 +9,14 @@
 	<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4" defer></script>
 	<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
 	<link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+	<!-- Iconify for icons -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/iconify/3.1.1/iconify.min.js"></script>
 </head>
 <body class="bg-base-200 min-h-screen">
 	<div class="container mx-auto p-6">
 		<div class="breadcrumbs text-sm mb-6">
 			<ul>
-				<li><a href="/">Home</a></li>
+				<li><a href="../../index.html">Home</a></li>
 				<li>daisyui components test</li>
 			</ul>
 		</div>
@@ -33,46 +35,53 @@
 				</div>
 			</div>
 
-			<!-- Tabs -->
+			<!-- Tabs (with Iconify icons) -->
 			<div class="card bg-base-300 shadow-xl">
 				<div class="card-body">
-					<h2 class="card-title">Tabs</h2>
-					<div role="tablist" class="tabs tabs-bordered">
-						<input type="radio" name="tabs" role="tab" class="tab" aria-label="One" checked />
-						<div role="tabpanel" class="tab-content p-4">Tab One content</div>
-						<input type="radio" name="tabs" role="tab" class="tab" aria-label="Two" />
-						<div role="tabpanel" class="tab-content p-4">Tab Two content</div>
-						<input type="radio" name="tabs" role="tab" class="tab" aria-label="Three" />
-						<div role="tabpanel" class="tab-content p-4">Tab Three content</div>
+					<h2 class="card-title">Tabs (with icons)</h2>
+					<div role="tablist" class="tabs tabs-lift">
+						<label class="tab">
+							<input type="radio" name="tabs_icons_demo" />
+							<span class="iconify text-current text-base me-2" data-icon="mdi:play-circle-outline" aria-hidden="true"></span>
+							Live
+						</label>
+						<div class="tab-content bg-base-100 border-base-300 p-6">Tab content 1</div>
+
+						<label class="tab">
+							<input type="radio" name="tabs_icons_demo" checked />
+							<span class="iconify text-current text-base me-2" data-icon="mdi:emoticon-happy-outline" aria-hidden="true"></span>
+							Laugh
+						</label>
+						<div class="tab-content bg-base-100 border-base-300 p-6">Tab content 2</div>
+
+						<label class="tab">
+							<input type="radio" name="tabs_icons_demo" />
+							<span class="iconify text-current text-base me-2" data-icon="mdi:heart-outline" aria-hidden="true"></span>
+							Love
+						</label>
+						<div class="tab-content bg-base-100 border-base-300 p-6">Tab content 3</div>
 					</div>
 				</div>
 			</div>
 
-			<!-- Form -->
+			<!-- Form with fieldset -->
 			<div class="card bg-base-300 shadow-xl">
 				<div class="card-body">
 					<h2 class="card-title">Form</h2>
 					<form class="space-y-4">
-						<label class="form-control w-full">
-							<div class="label">
-								<span class="label-text">Email</span>
-							</div>
-							<input type="email" placeholder="you@example.com" class="input input-bordered w-full" />
-						</label>
-						<label class="form-control w-full">
-							<div class="label">
-								<span class="label-text">Pick a fruit</span>
-							</div>
-							<select class="select select-bordered">
-								<option>Apple</option>
-								<option>Banana</option>
-								<option>Cherry</option>
-							</select>
-						</label>
-						<div class="flex items-center gap-3">
-							<input type="checkbox" class="checkbox" />
-							<span>Subscribe</span>
-						</div>
+						<fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-full border p-4">
+							<legend class="fieldset-legend">Page details</legend>
+
+							<label class="label">Title</label>
+							<input type="text" class="input input-bordered" placeholder="My awesome page" />
+
+							<label class="label">Slug</label>
+							<input type="text" class="input input-bordered" placeholder="my-awesome-page" />
+
+							<label class="label">Author</label>
+							<input type="text" class="input input-bordered" placeholder="Name" />
+						</fieldset>
+
 						<div class="card-actions justify-end">
 							<button type="submit" class="btn btn-primary">Submit</button>
 							<button type="reset" class="btn">Reset</button>
@@ -99,6 +108,29 @@
 							<span>Error alert</span>
 						</div>
 					</div>
+				</div>
+			</div>
+
+			<!-- Collapse -->
+			<div class="card bg-base-300 shadow-xl">
+				<div class="card-body">
+					<h2 class="card-title">Collapse</h2>
+					<div class="collapse collapse-arrow bg-base-200">
+						<input type="checkbox" />
+						<div class="collapse-title text-sm font-medium">Click to expand</div>
+						<div class="collapse-content">
+							<p>Hidden content. You can put any elements here.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Progress -->
+			<div class="card bg-base-300 shadow-xl">
+				<div class="card-body">
+					<h2 class="card-title">Progress</h2>
+					<progress class="progress w-full" value="40" max="100"></progress>
+					<input type="range" min="0" max="100" value="40" class="range" />
 				</div>
 			</div>
 		</div>
