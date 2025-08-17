@@ -8,5 +8,16 @@
     "borderhoverColor": "secondary",
     "textColor": "secondary",
     "sortname": "daisyui"
+  },
+  {
+    "section": "docs",
+    "name": "Docs site",
+    "description": "Simple docs site with 3 markdown pages using DaisyUI and Iconify.",
+    "path": "Apps/docs/index.html",
+    "color": "accent/60",
+    "borderhoverColor": "accent",
+    "textColor": "accent",
+    "icon": "mdi:file-document-outline",
+    "sortname": "docs"
   }
 ]
