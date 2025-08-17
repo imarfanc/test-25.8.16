@@ -30,16 +30,26 @@ async function loadApps(): Promise<AppMeta[]> {
 		return injected;
 	}
 
-	// Fallback to API if not injected
+	// Try API first; fall back to static JSON for static hosting
 	try {
 		const res = await fetch("/apps", { headers: { Accept: "application/json" } });
 		if (!res.ok) throw new Error(`HTTP ${res.status}`);
 		const data = await res.json();
 		const apps = Array.isArray(data?.apps) ? (data.apps as AppMeta[]) : [];
-		return apps;
-	} catch (err) {
-		console.error("Failed to load apps", err);
-		return [];
+		if (apps.length > 0) return apps;
+		throw new Error("Empty apps from API");
+	} catch (apiErr) {
+		try {
+			const res = await fetch("/Apps/Apps.json", { headers: { Accept: "application/json" } });
+			if (!res.ok) throw new Error(`HTTP ${res.status}`);
+			const data = await res.json();
+			if (Array.isArray(data)) return data as AppMeta[];
+			if (Array.isArray((data as any)?.apps)) return (data as any).apps as AppMeta[];
+			return [];
+		} catch (fallbackErr) {
+			console.error("Failed to load apps via API and static JSON", apiErr, fallbackErr);
+			return [];
+		}
 	}
 }
 
