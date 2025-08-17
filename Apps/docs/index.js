@@ -11,6 +11,10 @@ const PAGE_FILES = [
 
 let PAGES = [];
 
+// State for sidebar and settings visibility
+let isSidebarOpen = false;
+let isSettingsOpen = false;
+
 function getDefaultPageId() {
 	return PAGES.length > 0 ? PAGES[0].id : "";
 }
@@ -128,7 +132,29 @@ async function loadPages() {
 	return pages;
 }
 
-function render(pageId) {
+function toggleSidebar() {
+	isSidebarOpen = !isSidebarOpen;
+	const sidebarMount = document.getElementById("mount-sidebar");
+	if (sidebarMount) {
+		sidebarMount.style.display = isSidebarOpen ? "block" : "none";
+	}
+	// Re-render header with updated state
+	const currentPageId = parseHash();
+	render(currentPageId, true); // true to preserve content
+}
+
+function toggleSettings() {
+	isSettingsOpen = !isSettingsOpen;
+	const toolbarMount = document.getElementById("mount-toolbar");
+	if (toolbarMount) {
+		toolbarMount.style.display = isSettingsOpen ? "block" : "none";
+	}
+	// Re-render header with updated state
+	const currentPageId = parseHash();
+	render(currentPageId, true); // true to preserve content
+}
+
+function render(pageId, preserveContent = false) {
 	const headerMount = document.getElementById("mount-header");
 	const sidebarMount = document.getElementById("mount-sidebar");
 	const contentMount = document.getElementById("mount-content");
@@ -140,10 +166,13 @@ function render(pageId) {
 
 	// Header
 	headerMount.innerHTML = "";
-	headerMount.appendChild(createHeader({ title: "docs", onToggleSidebar: () => {
-		// scroll to sidebar
-		document.getElementById("mount-sidebar")?.scrollIntoView({ behavior: "smooth" });
-	}}));
+	headerMount.appendChild(createHeader({ 
+		title: "docs", 
+		onToggleSidebar: toggleSidebar,
+		onToggleSettings: toggleSettings,
+		isSidebarOpen: isSidebarOpen,
+		isSettingsOpen: isSettingsOpen
+	}));
 
 	// Sidebar
 	const page = resolvePage(pageId);
@@ -152,24 +181,35 @@ function render(pageId) {
 			location.hash = `#/${id}`;
 		}
 	};
-	sidebarMount.innerHTML = "";
-	sidebarMount.appendChild(createSidebar({ pages: PAGES, currentId: page.id, onNavigate }));
+	
+	// Only update sidebar if not preserving content
+	if (!preserveContent) {
+		sidebarMount.innerHTML = "";
+		sidebarMount.appendChild(createSidebar({ pages: PAGES, currentId: page.id, onNavigate }));
+		sidebarMount.style.display = isSidebarOpen ? "block" : "none";
+	}
 
 	// Settings toolbar
-	toolbarMount.innerHTML = "";
-	const currentOptions = { contentWidth: (sessionStorage.getItem("docs.contentWidth") || "normal") };
-	const settings = createSettings({ options: currentOptions, onChange: (opts) => {
-		sessionStorage.setItem("docs.contentWidth", opts.contentWidth);
-		contentMount.classList.toggle("max-w-3xl", opts.contentWidth === "normal");
-	}});
-	toolbarMount.appendChild(settings);
+	// Only update settings if not preserving content
+	if (!preserveContent) {
+		toolbarMount.innerHTML = "";
+		const currentOptions = { contentWidth: (sessionStorage.getItem("docs.contentWidth") || "normal") };
+		const settings = createSettings({ options: currentOptions, onChange: (opts) => {
+			sessionStorage.setItem("docs.contentWidth", opts.contentWidth);
+			contentMount.classList.toggle("max-w-3xl", opts.contentWidth === "normal");
+		}});
+		toolbarMount.appendChild(settings);
+		toolbarMount.style.display = isSettingsOpen ? "block" : "none";
+	}
 
-	// Content
-	contentMount.classList.toggle("max-w-3xl", currentOptions.contentWidth === "normal");
-	contentMount.innerHTML = "<div class=\"text-base-content/60 text-sm\">Loading...</div>";
-	fetchPageHtml(page.file).then((html) => {
-		contentMount.innerHTML = html;
-	});
+	// Content - only update if not preserving content
+	if (!preserveContent) {
+		contentMount.classList.toggle("max-w-3xl", (sessionStorage.getItem("docs.contentWidth") || "normal") === "normal");
+		contentMount.innerHTML = "<div class=\"text-base-content/60 text-sm\">Loading...</div>";
+		fetchPageHtml(page.file).then((html) => {
+			contentMount.innerHTML = html;
+		});
+	}
 }
 
 window.addEventListener("hashchange", () => {
