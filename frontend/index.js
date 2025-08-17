@@ -12,33 +12,9 @@ const daisyColors = new Set([
 ]);
 
 async function loadApps() {
-	// Prefer server-injected data to avoid an extra network round-trip
-	const injected = globalThis.__INITIAL_APPS__;
-	if (Array.isArray(injected) && injected.length > 0) {
-		return injected;
-	}
-
-	// Try API first; fall back to static JSON for static hosting
-	try {
-		const res = await fetch("/apps", { headers: { Accept: "application/json" } });
-		if (!res.ok) throw new Error(`HTTP ${res.status}`);
-		const data = await res.json();
-		const apps = Array.isArray(data?.apps) ? data.apps : [];
-		if (apps.length > 0) return apps;
-		throw new Error("Empty apps from API");
-	} catch (apiErr) {
-		try {
-			const res = await fetch("./Apps/Apps.json", { headers: { Accept: "application/json" } });
-			if (!res.ok) throw new Error(`HTTP ${res.status}`);
-			const data = await res.json();
-			if (Array.isArray(data)) return data;
-			if (Array.isArray(data?.apps)) return data.apps;
-			return [];
-		} catch (fallbackErr) {
-			console.error("Failed to load apps via API and static JSON", apiErr, fallbackErr);
-			return [];
-		}
-	}
+	const res = await fetch("./Apps/Apps.json", { headers: { Accept: "application/json" } });
+	const data = await res.json();
+	return Array.isArray(data) ? data : (Array.isArray(data?.apps) ? data.apps : []);
 }
 
 function renderApps(apps) {
