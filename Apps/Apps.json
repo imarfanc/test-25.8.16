@@ -1,0 +1,12 @@
+[
+  {
+    "section": "daisyui-test-apps",
+    "name": "shadcn test",
+    "description": "Minimal shadcn-style Button + Tailwind v4 (no build).",
+    "path": "/Apps/shadcn/index.html",
+    "color": "secondary/60",
+    "borderhoverColor": "secondary",
+    "textColor": "secondary",
+    "sortname": "shadcn"
+  }
+]
